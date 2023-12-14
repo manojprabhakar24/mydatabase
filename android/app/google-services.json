@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "60728787350",
+    "project_id": "brown-otp",
+    "storage_bucket": "brown-otp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60728787350:android:1f8fa7d77b5ddff2b59db7",
+        "android_client_info": {
+          "package_name": "com.example.scissors"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyActDfkeF9SBbSfG4YrqmrRnC6xAdrUCOo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60728787350:android:06cda102a66448adb59db7",
+        "android_client_info": {
+          "package_name": "com.example.scissors_otp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyActDfkeF9SBbSfG4YrqmrRnC6xAdrUCOo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
