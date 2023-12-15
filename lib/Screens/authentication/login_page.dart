@@ -1,25 +1,43 @@
+import 'dart:convert';
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../confirmation/confirmation_screen.dart';
 import 'auth_service.dart';
+import 'package:http/http.dart' as http;
+class Service {
+  final String name;
+  final double price;
+
+  Service({
+    required this.name,
+    required this.price,
+    // Other properties of the Service class can be added here
+  });
+}
 
 class LoginPage extends StatefulWidget {
   final DateTime selectedDate;
   final List<String> selectedTimeSlots;
+  final List<Service> selectedServices;
 
   const LoginPage({
     Key? key, required this.selectedDate,
-    required this.selectedTimeSlots,}):
+    required this.selectedTimeSlots,
+    required this.selectedServices,}):
         super(key: key);
+
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
-bool _isButtonPressed = false;
+
 class _LoginPageState extends State<LoginPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  bool _isButtonPressed = false;
 
   TextEditingController _nameController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
@@ -33,6 +51,44 @@ class _LoginPageState extends State<LoginPage>
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this);
+
+
+  }
+  void sendMessagesToEnteredNumber() async {
+    String phoneNumber = '+91' + _phoneController.text.trim();
+    String messageBody =
+        'Your scissors saloon appointment is scheduled for  ${widget.selectedDate.toString()} at ${widget.selectedTimeSlots.join(", ")}. Name: ${_nameController.text}, Phone: ${_phoneController.text}';
+           sendSMS(messageBody, phoneNumber);
+  }
+
+  void sendSMS(String messageBody, String phoneNumber) async {
+    final accountSid = 'ACc086b6a9903da2b141e9f2df3faa5891'; // Replace with your Twilio Account SID
+    final authToken = '6306235ef4edd01d46b76a1be3e7fa4a'; // Replace with your Twilio Auth Token
+    final twilioNumber = '+12057547042'; // Replace with your Twilio phone number
+
+    final Uri uri = Uri.parse(
+        'https://api.twilio.com/2010-04-01/Accounts/$accountSid/Messages.json');
+
+    final response = await http.post(
+      uri,
+      headers: <String, String>{
+        'Authorization': 'Basic ' +
+            base64Encode(utf8.encode('$accountSid:$authToken')),
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: <String, String>{
+        'From': twilioNumber,
+        'To': phoneNumber,
+        'Body': messageBody,
+      },
+    );
+
+    if (response.statusCode == 201) {
+      print('SMS sent successfully');
+    } else {
+      print('Failed to send SMS: ${response.statusCode}');
+      print(response.body);
+    }
   }
 
   @override
@@ -41,26 +97,35 @@ class _LoginPageState extends State<LoginPage>
     super.dispose();
   }
   void _saveData() {
-    print("Attempting to save data...");
     String text1 = _nameController.text;
     String text2 = _phoneController.text;
-  
-    print("Name: $text1");
-    print("Phone: $text2");
 
-    FirebaseFirestore.instance.collection('userData').add({
+    Timestamp timestamp = Timestamp.fromDate(widget.selectedDate);
+
+    // Create a reference to the merged collection
+    CollectionReference combinedCollection =
+    FirebaseFirestore.instance.collection('combinedData');
+
+    // Access widget.selectedServices here
+    combinedCollection.add({
       'name': text1,
       'phoneNumber': text2,
-    })
-    .then((value) {
+      'selectedDate': timestamp,
+      'selectedTimeSlots': widget.selectedTimeSlots,
+      'services': widget.selectedServices.map((service) => {
+        'serviceName': service.name,
+        'servicePrice': service.price,
+        // Add other properties of the service here
+      }).toList(),
+    }).then((value) {
       print("Data saved successfully!");
-
-
-    })
-    .catchError((error) {
+    }).catchError((error) {
       print("Failed to save data: $error");
     });
   }
+
+
+
   @override
   Widget build (BuildContext context) {
     return Scaffold(
@@ -285,7 +350,7 @@ class _LoginPageState extends State<LoginPage>
                                                                   children: [
                                                                     ElevatedButton(
                                                                       onPressed: () {
-                                                                         
+                                                                        sendMessagesToEnteredNumber();
                                                                         if (_formKey1.currentState!.validate()) {
                                                                           AuthService.loginWithOtp(
                                                                             otp: _otpController.text,

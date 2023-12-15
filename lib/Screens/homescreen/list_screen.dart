@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scissors/Screens/homescreen/service_list.dart';
@@ -129,6 +130,24 @@ class _ListScreenState extends State<ListScreen> {
     });
 
     _showSelectedServices(context);
+
+  }
+  void addSelectedServicesToFirestore() {
+    CollectionReference selectedServicesRef = FirebaseFirestore.instance.collection('combinedData');
+
+    for (Services service in selectedServices) {
+      selectedServicesRef.add({
+        'name': service.name,
+        'price': service.price,
+        // Add other properties of the service here
+      }).then((value) {
+        // Successfully added to Firestore
+        print('Service added to Firestore: ${service.name}');
+      }).catchError((error) {
+        // Handle errors if any
+        print('Error adding service to Firestore: $error');
+      });
+    }
   }
 
   void _showSelectedServices(BuildContext context) {
@@ -230,7 +249,9 @@ class _ListScreenState extends State<ListScreen> {
                       if (totalAmount > 0)
                         RawMaterialButton(
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>BookingSlotScreen()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>BookingSlotScreen(selectedServices: ServicesList,)));
+                            addSelectedServicesToFirestore();
+
                           },
                           fillColor: Colors.brown[900],
                           constraints: BoxConstraints(maxHeight: 100),
@@ -255,9 +276,14 @@ class _ListScreenState extends State<ListScreen> {
                 ),
               ),
             );
+
           },
+
         );
+
       },
+
     );
+
   }
 }

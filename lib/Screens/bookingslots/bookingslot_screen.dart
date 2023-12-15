@@ -3,9 +3,13 @@ import 'package:intl/intl.dart';
 
 import '../../themes/theme.dart';
 import '../authentication/login_page.dart';
+import '../homescreen/service_list.dart';
 
 
 class BookingSlotScreen extends StatefulWidget {
+  final List<Services> selectedServices; // Define the variable
+
+  BookingSlotScreen({Key? key, required this.selectedServices}) : super(key: key); // Constructor that accepts selectedServices
   @override
   _BookingSlotScreenState createState() => _BookingSlotScreenState();
 }
@@ -283,7 +287,7 @@ class _HorizontalWeekCalendarPackageState extends State<HorizontalWeekCalendarPa
       MaterialPageRoute(
         builder: (context) => LoginPage(
           selectedDate: widget.selectedDate,
-          selectedTimeSlots: selectedTimeSlots,
+          selectedTimeSlots: selectedTimeSlots, selectedServices: [],
         ),
       ),
     );
