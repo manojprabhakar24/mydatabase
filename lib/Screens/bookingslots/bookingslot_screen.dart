@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../themes/theme.dart';
+
 import '../authentication/login_page.dart';
 import '../homescreen/service_list.dart';
 
 
 class BookingSlotScreen extends StatefulWidget {
+
   final List<Services> selectedServices; // Define the variable
 
   BookingSlotScreen({Key? key, required this.selectedServices}) : super(key: key); // Constructor that accepts selectedServices
@@ -87,7 +89,7 @@ class _BookingSlotScreenState extends State<BookingSlotScreen> {
             child: Padding(
               padding: const EdgeInsets.only(top: 50),
               child: Container(
-                height: 380,
+                height: 500,
                 width: 500,
                 child: Card(
                   margin: EdgeInsets.all(10),
@@ -285,7 +287,7 @@ class _HorizontalWeekCalendarPackageState extends State<HorizontalWeekCalendarPa
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => LoginPage(
+        builder: (context) =>  MyHomePage(
           selectedDate: widget.selectedDate,
           selectedTimeSlots: selectedTimeSlots, selectedServices: [],
         ),
