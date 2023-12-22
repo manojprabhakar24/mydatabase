@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -41,7 +40,7 @@ class AppFonts {
 
   static TextStyle getDescriptionStyle() {
     return GoogleFonts.poppins(
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.bold,color: Colors.white,
     );
   }
 

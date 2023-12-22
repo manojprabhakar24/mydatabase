@@ -42,6 +42,7 @@ dependencies:
   cloud_firestore: ^4.13.6
   twilio_flutter: ^0.0.9
   google_fonts: ^4.0.4
+  http: ^0.13.6
 
 
 dev_dependencies:
@@ -68,7 +69,8 @@ flutter:
     - assets/massage.jpeg
     - assets/Scissors-image-remove.png
     - assets/shaving.jpeg
-    - assets/tick.jpg
+    - assets/tick.png
+    - assets/first.jpg
 
 
   # The following line ensures that the Material Icons font is

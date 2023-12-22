@@ -1,22 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../../themes/theme.dart';
-
 import '../authentication/login_page.dart';
-import '../homescreen/service_list.dart';
+
 
 
 class BookingSlotScreen extends StatefulWidget {
-
-  final List<Services> selectedServices; // Define the variable
-
-  BookingSlotScreen({Key? key, required this.selectedServices}) : super(key: key); // Constructor that accepts selectedServices
   @override
   _BookingSlotScreenState createState() => _BookingSlotScreenState();
 }
 
 class _BookingSlotScreenState extends State<BookingSlotScreen> {
+
   DateTime selectedDate = DateTime.now();
   Map<String, Color> buttonColors = {
     '10-11AM': Colors.green,
@@ -72,7 +70,13 @@ class _BookingSlotScreenState extends State<BookingSlotScreen> {
                   Padding(padding: EdgeInsets.only(left: 20)),
                   Text(
                     "Scissor's",
-                    style: AppFonts.getHeadingStyle(),
+                    style: GoogleFonts.openSans(
+                      textStyle: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -89,7 +93,7 @@ class _BookingSlotScreenState extends State<BookingSlotScreen> {
             child: Padding(
               padding: const EdgeInsets.only(top: 50),
               child: Container(
-                height: 500,
+                height: 380,
                 width: 500,
                 child: Card(
                   margin: EdgeInsets.all(10),
@@ -131,6 +135,8 @@ class _BookingSlotScreenState extends State<BookingSlotScreen> {
     );
   }
 
+
+
   Future<void> _selectDate(BuildContext context) async {
     DateTime? picked = await showDatePicker(
       context: context,
@@ -155,6 +161,8 @@ class _BookingSlotScreenState extends State<BookingSlotScreen> {
       (buttonColors[time] == Colors.green) ? Colors.red : Colors.green;
     });
   }
+
+
 }
 
 class HorizontalWeekCalendarPackage extends StatefulWidget {
@@ -287,7 +295,7 @@ class _HorizontalWeekCalendarPackageState extends State<HorizontalWeekCalendarPa
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) =>  MyHomePage(
+        builder: (context) => LoginPage(
           selectedDate: widget.selectedDate,
           selectedTimeSlots: selectedTimeSlots, selectedServices: [],
         ),

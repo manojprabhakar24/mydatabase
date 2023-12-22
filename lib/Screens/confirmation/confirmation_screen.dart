@@ -14,7 +14,6 @@ class ConfirmationScreen extends StatelessWidget {
     required this.selectedDate,
     required this.selectedTimeSlots,});
 
-
   String formattedDate(DateTime date) {
     return DateFormat.yMMMMd().format(date);
   }
@@ -42,7 +41,7 @@ class ConfirmationScreen extends StatelessWidget {
               Padding(padding: EdgeInsets.symmetric(vertical: 35)),
               Center(
                 child: Image.asset(
-                  'assets/Scissors-image-remove.png',
+                  "assets/Scissors-image-remove.png",
                   width: 120,
                   height: 120,
                 ),
@@ -84,7 +83,7 @@ class ConfirmationScreen extends StatelessWidget {
                       children: [
                         Padding(padding: EdgeInsets.only(top: 2)),
                         Image.asset(
-                          'assets/tick.jpg',
+                          'assets/tick.png',
                           width: 85,
                           height: 70,
                         ),
@@ -100,11 +99,10 @@ class ConfirmationScreen extends StatelessWidget {
                                 )
                             ),
                             SizedBox(height: 5),
-
                             Text(
-                              "NAME : $name",
+                              "Name : $name",
                               style: GoogleFonts.openSans(
-                                fontSize: 18,
+                                fontSize: 17,
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -112,7 +110,7 @@ class ConfirmationScreen extends StatelessWidget {
                             Text(
                               "Mobile Number : $phoneNumber",
                               style: GoogleFonts.openSans(
-                                fontSize: 18,
+                                fontSize: 17,
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -148,6 +146,7 @@ class ConfirmationScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
+                            SizedBox(height: 5),
                             Text(
                               'Selected Date: ${formattedDate(selectedDate)}',
                               style: GoogleFonts.openSans(
@@ -169,7 +168,5 @@ class ConfirmationScreen extends StatelessWidget {
         ],
       ),
     );
-
-
   }
 }

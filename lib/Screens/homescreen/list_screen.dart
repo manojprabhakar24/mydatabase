@@ -1,117 +1,187 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scissors/Screens/homescreen/service_list.dart';
 
-
-import '../bookingslots/bookingslot_screen.dart';
-
+import '../stylisdata/style.dart';
 
 
 class ListScreen extends StatefulWidget {
   @override
   _ListScreenState createState() => _ListScreenState();
+  void navigateToListScreen(BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ListScreen()));
+  }
 }
-
 class _ListScreenState extends State<ListScreen> {
   List<Services> selectedServices = [];
   double totalAmount = 0.0;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: ListView.builder(
-            padding: EdgeInsets.symmetric(vertical: 2),
-            itemCount: ServicesList.length,
-            itemBuilder: (context, index) {
-              Services service = ServicesList[index];
-              return Card(
-                child: Container(
-                  padding: EdgeInsets.all(8),
-                  child: ListTile(
-                    title: Row(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(textTheme: TextTheme()),
+      themeMode: ThemeMode.system,
+      home: Scaffold(
+        body: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/background.jpg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(255, 255, 255, 0.8),
+              ),
+              child:Column(
+                children: [
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(5, 10, 10, 0),
+                      ),
+                      Image.asset(
+                        'assets/Scissors-image-remove.png',
+                        width: 100,
+                        height: 100,
+                      ),
+                    ],
+                  ),
+                  Row(
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.asset(
-                            service.images,
-                            height: 55,
-                            width: 85,
-                            fit: BoxFit.cover,
+                        Padding(padding: EdgeInsets.symmetric(horizontal: 17.0)),
+                        Text(
+                          "Scissor's",
+                          style: GoogleFonts.openSans(
+                            textStyle: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
                           ),
                         ),
-                        SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                service.name,
-                                style: GoogleFonts.openSans(
-                                  textStyle: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 4),
-                              Text(
-                                service.price,
-                                style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    subtitle: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: Text(
-                        service.description,
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                            fontSize: 12,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-
-                        ),
-                      ),
-                    ),
-
-                    trailing: ElevatedButton(
-                      onPressed: () {
-                        _toggleService(service);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: selectedServices.contains(service)
-                            ? Colors.brown[400]
-                            : Colors.brown[800],
-                      ),
-                      child: Text(
-                        selectedServices.contains(service) ? 'Remove' : 'Add',
+                      ]),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Services",
                         style: GoogleFonts.openSans(
                           textStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
                           ),
                         ),
                       ),
+                    ],
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      padding: EdgeInsets.symmetric(vertical: 2),
+                      itemCount: ServicesList.length,
+                      itemBuilder: (context, index) {
+                        Services service = ServicesList[index];
+                        return Column(
+                          children: [
+                            Card(
+                              child: Container(
+                                padding: EdgeInsets.all(8),
+                                child: ListTile(
+                                  title: Row(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: Image.asset(
+                                          service.images,
+                                          height: 55,
+                                          width: 85,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      SizedBox(width: 8),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              service.name,
+                                              style: GoogleFonts.openSans(
+                                                textStyle: TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(height: 4),
+                                            Text(
+                                              service.price,
+                                              style: GoogleFonts.poppins(
+                                                textStyle: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  subtitle: Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 4),
+                                    child: Text(
+                                      service.description,
+                                      style: GoogleFonts.poppins(
+                                        textStyle: TextStyle(
+                                          fontSize: 12,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+
+                                      ),
+                                    ),
+                                  ),
+                                  trailing: ElevatedButton(
+                                    onPressed: () {
+                                      _toggleService(service);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      primary: selectedServices.contains(service)
+                                          ? Colors.brown[400]
+                                          : Colors.brown[800],
+                                    ),
+                                    child: Text(
+                                      selectedServices.contains(service) ? 'Remove' : 'Add',
+                                      style: GoogleFonts.openSans(
+                                        textStyle: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ) ;
+                      },
                     ),
                   ),
-                ),
-              );
-            },
-          ),
+                ],
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
+
   }
 
   void _toggleService(Services service) {
@@ -128,28 +198,8 @@ class _ListScreenState extends State<ListScreen> {
                 0.0;
       }
     });
-
     _showSelectedServices(context);
-
   }
-  void addSelectedServicesToFirestore() {
-    CollectionReference selectedServicesRef = FirebaseFirestore.instance.collection('combinedData');
-
-    for (Services service in selectedServices) {
-      selectedServicesRef.add({
-        'name': service.name,
-        'price': service.price,
-        // Add other properties of the service here
-      }).then((value) {
-        // Successfully added to Firestore
-        print('Service added to Firestore: ${service.name}');
-      }).catchError((error) {
-        // Handle errors if any
-        print('Error adding service to Firestore: $error');
-      });
-    }
-  }
-
   void _showSelectedServices(BuildContext context) {
     showModalBottomSheet(
       backgroundColor: Colors.transparent,
@@ -249,9 +299,7 @@ class _ListScreenState extends State<ListScreen> {
                       if (totalAmount > 0)
                         RawMaterialButton(
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>BookingSlotScreen(selectedServices: ServicesList,)));
-                            addSelectedServicesToFirestore();
-
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>MyApp1()));
                           },
                           fillColor: Colors.brown[900],
                           constraints: BoxConstraints(maxHeight: 100),
@@ -276,14 +324,9 @@ class _ListScreenState extends State<ListScreen> {
                 ),
               ),
             );
-
           },
-
         );
-
       },
-
     );
-
   }
 }
