@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController otpController = TextEditingController();
   TwilioFlutter twilioFlutter = TwilioFlutter(
     accountSid: 'AC45d39b3d898206fef90d4ed67fb4a7bc',
-    authToken: '12e9130843dedf996dda766ec0c5191b',
+    authToken: '2a51cc575335861d62065ad93ab47a67',
     twilioNumber: '+12816168209',
   );
 
@@ -195,7 +195,7 @@ class _LoginPageState extends State<LoginPage> {
 
     // Create a reference to the merged collection
     CollectionReference combinedCollection =
-    FirebaseFirestore.instance.collection('combinedData');
+    FirebaseFirestore.instance.collection('appointments');
 
     // Access widget.selectedServices here
     combinedCollection.add({
