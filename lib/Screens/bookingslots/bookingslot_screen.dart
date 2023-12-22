@@ -295,7 +295,7 @@ class _HorizontalWeekCalendarPackageState extends State<HorizontalWeekCalendarPa
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => LoginPage(
+        builder: (context) => MyHomePage(
           selectedDate: widget.selectedDate,
           selectedTimeSlots: selectedTimeSlots, selectedServices: [],
         ),

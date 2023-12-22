@@ -354,7 +354,7 @@ class _HorizontalWeekCalendarPackageState
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => LoginPage(
+        builder: (context) => MyHomePage(
           selectedDate: widget.selectedDate,
           selectedTimeSlots: selectedTimeSlots, selectedServices: [],
         ),
